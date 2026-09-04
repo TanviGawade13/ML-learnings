@@ -1,70 +1,78 @@
-# personal-finance-tracker
+# 💰 Personal Finance Tracker
 
-<!-- # break exits a loop 
-# return exits a function 
-# continue prevents the rest of the code from executing from the current loop 
-# .strip() and 
-# try except ValueError
-# while True
-# if not 
-# f-strings ----- (f"{variable}sometext{variable}")
-# enumerate()
-# .items()
-# .keys() .values()
-# .items() returns a 2d list of tuples 
-# for key,value in transaction.items():
-# .title()
-# iterating over a dictnionry 
-so basically python has a inbuilt tool box called csv which helps in operations regarding csv
-and in this toolbox there are tools like DictWriter DictReader 
-dictwriter converts dictonaries into csv rows -->
+A simple CLI-based Personal Finance Tracker built using Python.
 
-Step 1
-Import csv module
-        ↓
-Step 2
-Open CSV file with open(filename, 'w', newline="") as csvfile
-        ↓
-Step 3
-Tell Python the column names
-        ↓
-Step 4
-Create a DictWriter 
-writer = csv.DictWriter(csvfile, feildnames = column_names) --- here it just tells the dictwriter what the columns are
-        ↓
-Step 5
-Write column headers 
-writer.writeheader() actually writes the header in the csv 
-        ↓
-Step 6
-Write every transaction
-writer.writer(transactions) ---- transactions is a list containing dictniories
-writer.writerows() ---take every dict in the list AND WRITE IN SEPERATE CSV ROW
-        ↓
-Step 7
-Close file automatically
+This was a project I built mainly to **learn Python by actually building something instead of only watching tutorials or solving isolated questions**.
 
-💰 Personal Finance Tracker — Python Only
+## What it can do
 
-We will build a CLI-based Personal Finance Tracker first.
+* Add income and expenses
+* View all transactions
+* View financial summary and balance
+* View category-wise income and expenses
+* Search transactions by category
+* Delete transactions
+* Save transactions to a CSV file
+* Load previous transactions when the program starts
 
-<!-- Phase 1 — Error Handling 🛡️ -->
- Handle invalid amount input
- Prevent negative/zero amounts
- Handle empty category
- Handle invalid menu choices
-<!-- Phase 2 — Core Features 📋 -->
- View transactions
- Calculate total expenses
- Category-wise spending
- Search/filter transactions
- Delete a transaction
-<!-- Phase 3 — File Handling 💾 -->
- Save transactions to CSV
- Load transactions from CSV
- Prevent data loss
-<!-- Phase 4 — Final Polish 🚀 -->
- Clean code into functions
- Improve menu
- Test edge cases
- Final project structure
+## Things I learned while building this
+
+* Functions and program flow
+* `while True`, `break`, `continue`, and `return`
+* Input validation using `try` and `except`
+* Lists and dictionaries working together
+* Iterating through dictionaries
+* `enumerate()` and `.items()`
+* File handling
+* Working with CSV files using `DictReader` and `DictWriter`
+* Saving and loading data
+* Handling edge cases
+
+## Things I got stuck on 🐛
+
+While building this project, I ran into a few bugs:
+
+* My category summary kept increasing every time I viewed it because I was storing the summary dictionaries globally.
+* I accidentally placed a `return` outside an `if` block, causing my delete function to exit immediately.
+* I called my main program twice, which caused the menu flow to behave incorrectly.
+* I had to figure out how CSV data is loaded as strings and convert the `amount` back to a `float`.
+* I learned that saving data only when exiting could lead to data loss if the program unexpectedly stopped.
+
+## Biggest takeaway
+
+The most challenging part wasn't writing Python syntax. It was understanding how the data moves through the program:
+
+```text
+User Input
+    ↓
+Validation
+    ↓
+Transaction Dictionary
+    ↓
+Transactions List
+    ↓
+CSV File
+    ↓
+Program Restart
+    ↓
+Load CSV Back Into Transactions List
+```
+
+This project helped me understand how different Python concepts work together in a real program.
+
+## Tech Used
+
+* Python
+* Built-in `csv` module
+
+## Next Improvements
+
+* Add dates to transactions
+* Edit transactions
+* Monthly summaries
+* Data visualization
+* Store data using SQLite
+
+---
+
+Built as part of my **project-based Python learning journey** 🚀

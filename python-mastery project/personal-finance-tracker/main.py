@@ -1,7 +1,5 @@
 import csv
 transactions = []
-category_expenses = {}
-category_income = {}
 
 def load_csv():
     try:
@@ -11,11 +9,9 @@ def load_csv():
             for row in reader: #each row is a dict
                 row["amount"] = float(row['amount']) #we convert to float to help in the calculatioins
                 transactions.append(row)
-            print('Transactions fetched successfully')
 
     except FileNotFoundError:
-        print("The csv file not found")
-        return
+        print("No previous transactions found. Starting fresh.")
 
 def save_transaction():
     column_names = ['type','category','amount'] #we use this for the csv to know the order of columns 
@@ -27,19 +23,28 @@ def save_transaction():
     print("Transactions added to the csv successfully")
 
 def delete_transaction():
+    if not transactions:
+        print("There are no transactions to delete")
+        return
     print("\n-------Choose the transaction you want to delete---------")
     for idx ,transaction in enumerate(transactions, start=1):
         print(f"{idx}. {transaction['type']} | {transaction['category']} | {transaction['amount']}")
-    try:
-        while True: 
-            select = int(input("Enter the transaction number you want to delete: ").strip())
-            transactions.pop(select-1)
+
+    while True:
+        try:
+            select = int(input("Enter transaction number: ").strip())
+
+            if select < 1 or select > len(transactions):
+                print("Please select a valid transaction number")
+                continue
+
+            transactions.pop(select - 1)
+            print("Transaction deleted successfully")
             break
 
-            if not select:
-                continue
-    except ValueError:
-        print("Please enter a valid number")
+        except ValueError:
+            print("Please enter a valid number")
+
 
 def search_category():
     category = input("Enter the catergory you want to search : ").strip().title()
@@ -107,6 +112,8 @@ def view_summary():
     print(f"Current Balance: ${balance}")
 
 def category_summary():
+    category_expenses = {}
+    category_income = {}
     for transaction in transactions:
         category = transaction['category']
         amount = transaction['amount']
@@ -156,8 +163,10 @@ Select one of the following options:
 
             if choice == 1:
                 add_transaction("Income")
+                save_transaction()
             elif choice == 2: 
                 add_transaction("Expense")
+                save_transaction()
             elif choice == 3:
                 view_transaction()
             elif choice == 4:
@@ -168,12 +177,13 @@ Select one of the following options:
                 search_category()
             elif choice == 7:
                 delete_transaction()
+                save_transaction()
             elif choice == 8:
                 save_transaction()
                 print("Thanks for using personal finance tracker")
                 return
             else: 
-                print("The value should be a number between 1 to 5")
+                print("Please enter a valid number")
 
         except ValueError: 
             print("The value should be a number")
